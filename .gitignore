@@ -1,0 +1,6 @@
+node_modules/
+convert_img_to_string.py
+face_encodings.pkl
+generate_jwt.py
+app.log
+*.pyc
