@@ -56,7 +56,7 @@ app.add_middleware(
 )
 
 
-@app.get("/health", response_model=HealthResponse)
+@app.get("/api/health", response_model=HealthResponse)
 async def health_check():
     """Health check endpoint."""
     return HealthResponse(
@@ -66,7 +66,7 @@ async def health_check():
     )
 
 
-@app.post("/enroll", response_model=FaceEnrollmentResponse)
+@app.post("/api/enroll", response_model=FaceEnrollmentResponse)
 async def enroll_face(
     user_id: str,
     file: UploadFile = File(..., description="Face image file"),
@@ -115,7 +115,7 @@ async def enroll_face(
         )
 
 
-@app.post("/verify", response_model=FaceVerificationResponse)
+@app.post("/api/verify", response_model=FaceVerificationResponse)
 async def verify_face(request: FaceVerificationRequest):
     """Verify face for authentication."""
     start_time = time.time()
@@ -166,7 +166,22 @@ async def verify_face(request: FaceVerificationRequest):
             )
 
             stop_time = time.time()
-            print(f"time taken to verify: {stop_time - start_time:.2f}")
+            time_taken = f"{stop_time - start_time:.2f}"
+            (
+                print(
+                    "\033[91m"
+                    + f"FaceAuth: Time taken to verify face: {time_taken}"
+                    + "\033[0m",
+                    flush=True,
+                )
+                if float(time_taken) > 1
+                else print(
+                    "\033[92m"
+                    + f"FaceAuth: Time taken to verify face: {time_taken}"
+                    + "\033[0m",
+                    flush=True,
+                )
+            )
 
             return FaceVerificationResponse(
                 success=True,
@@ -199,7 +214,7 @@ async def verify_face(request: FaceVerificationRequest):
         )
 
 
-@app.delete("/enroll/{user_id}")
+@app.delete("/api/enroll/{user_id}")
 async def delete_user_face(user_id: str):
     """Delete face encodings for a user."""
     try:
@@ -223,7 +238,7 @@ async def delete_user_face(user_id: str):
         )
 
 
-@app.get("/users")
+@app.get("/api/users")
 async def list_enrolled_users():
     """List all enrolled users."""
     try:
