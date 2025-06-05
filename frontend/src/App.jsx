@@ -14,8 +14,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-// const API_BASE_URL = "http://localhost:8000";
-const API_BASE_URL = "https://catfish-teaching-notably.ngrok-free.app/api";
+const API_BASE_URL = "http://localhost:8000/api";
 
 const FacialAuthApp = () => {
   const [activeTab, setActiveTab] = useState("enroll");
