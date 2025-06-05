@@ -4,3 +4,4 @@ face_encodings.pkl
 generate_jwt.py
 app.log
 *.pyc
+notes.txt
